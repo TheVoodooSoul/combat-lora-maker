@@ -50,6 +50,7 @@ export default function Home() {
   const [isTraining, setIsTraining] = useState(false);
   const [trainingProgress, setTrainingProgress] = useState(0);
   const [activeTab, setActiveTab] = useState('setup');
+  const [baseModel, setBaseModel] = useState('wan_2.2');
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -89,6 +90,7 @@ export default function Home() {
             ...trainingConfig,
             modelName: `combat_lora_${Date.now()}`,
             triggerWord: 'combat_style',
+            baseModel: baseModel,
           },
         }),
       });
@@ -215,15 +217,19 @@ export default function Home() {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium mb-2">Base Model</label>
-                    <select className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg">
-                      <option>WAN 2.2</option>
-                      <option>SDXL 1.0</option>
-                      <option>SD 1.5</option>
-                      <option>SD 2.1</option>
-                      <option>Pony Diffusion V6</option>
-                      <option>Flux Dev</option>
-                      <option>Flux Schnell</option>
-                      <option>Custom Checkpoint</option>
+                    <select 
+                      value={baseModel}
+                      onChange={(e) => setBaseModel(e.target.value)}
+                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg"
+                    >
+                      <option value="wan_2.2">WAN 2.2 (Default)</option>
+                      <option value="sdxl">SDXL 1.0</option>
+                      <option value="sd15">SD 1.5</option>
+                      <option value="sd21">SD 2.1</option>
+                      <option value="pony">Pony Diffusion V6</option>
+                      <option value="flux-dev">Flux Dev</option>
+                      <option value="flux-schnell">Flux Schnell</option>
+                      <option value="custom">Custom Checkpoint</option>
                     </select>
                   </div>
                   <div>
@@ -319,7 +325,7 @@ export default function Home() {
                   <input 
                     type="file" 
                     multiple 
-                    accept="image/*" 
+                    accept="image/jpeg,image/jpg,image/png,image/webp" 
                     onChange={handleImageUpload}
                     className="hidden" 
                   />
@@ -392,7 +398,7 @@ export default function Home() {
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-400">Model:</span>
-                      <span>WAN 2.2</span>
+                      <span>{baseModel === 'wan_2.2' ? 'WAN 2.2' : baseModel.toUpperCase()}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-400">Images:</span>

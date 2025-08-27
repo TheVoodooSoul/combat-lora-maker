@@ -11,20 +11,47 @@ import hashlib
 
 class CombatImageScraper:
     def __init__(self):
+        # Using direct URLs for free combat images (no API needed)
+        self.free_combat_images = {
+            'punching': [
+                # Free stock images from various sources
+                'https://images.pexels.com/photos/598686/pexels-photo-598686.jpeg?w=1024',
+                'https://images.pexels.com/photos/4761792/pexels-photo-4761792.jpeg?w=1024',
+                'https://images.pexels.com/photos/4754146/pexels-photo-4754146.jpeg?w=1024',
+                'https://images.pexels.com/photos/6740755/pexels-photo-6740755.jpeg?w=1024',
+                'https://images.pexels.com/photos/6740059/pexels-photo-6740059.jpeg?w=1024',
+                'https://images.pexels.com/photos/4761663/pexels-photo-4761663.jpeg?w=1024',
+                'https://images.pexels.com/photos/4753986/pexels-photo-4753986.jpeg?w=1024',
+                'https://images.pexels.com/photos/6740301/pexels-photo-6740301.jpeg?w=1024',
+                'https://images.pexels.com/photos/4752861/pexels-photo-4752861.jpeg?w=1024',
+                'https://images.pexels.com/photos/5750957/pexels-photo-5750957.jpeg?w=1024',
+                'https://cdn.pixabay.com/photo/2017/06/16/20/26/boxing-2410207_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2015/05/26/09/24/boxer-784474_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2016/03/27/20/52/boxer-1284012_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2015/09/04/23/46/box-923471_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2014/10/06/23/57/boxers-477423_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2016/03/27/19/43/martial-arts-1283853_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2016/11/29/02/22/boxer-1867015_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2019/10/29/11/22/boxing-4586719_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2016/05/10/14/49/boxing-1383797_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2016/11/29/06/17/adult-1867743_960_720.jpg'
+            ],
+            'kicking': [
+                'https://cdn.pixabay.com/photo/2016/11/21/17/33/martial-arts-1846560_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2017/01/14/08/15/kick-1979181_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2016/11/29/03/52/fight-1867126_960_720.jpg'
+            ],
+            'sword': [
+                'https://cdn.pixabay.com/photo/2017/04/27/08/28/knight-2264826_960_720.jpg',
+                'https://cdn.pixabay.com/photo/2016/11/29/13/15/sword-1869818_960_720.jpg'
+            ]
+        }
+        
         self.sources = {
-            # Free stock photo sites with combat/action content
-            'pexels': {
-                'api_key': 'YOUR_PEXELS_API_KEY',  # Free at pexels.com
-                'base_url': 'https://api.pexels.com/v1/search',
-                'headers': {'Authorization': 'YOUR_PEXELS_API_KEY'}
-            },
-            'unsplash': {
-                'api_key': 'YOUR_UNSPLASH_KEY',  # Free at unsplash.com/developers
-                'base_url': 'https://api.unsplash.com/search/photos',
-            },
-            'pixabay': {
-                'api_key': 'YOUR_PIXABAY_KEY',  # Free at pixabay.com/api
-                'base_url': 'https://pixabay.com/api/',
+            # Keeping structure for future API integration
+            'direct': {
+                'api_key': 'none',
+                'base_url': 'direct_download'
             }
         }
         
@@ -147,42 +174,33 @@ class CombatImageScraper:
     def auto_collect_combat_dataset(self, combat_type: str = 'punching', 
                                    target_count: int = 30):
         """Automatically collect a full dataset for training"""
-        all_images = []
+        print(f"\n🎯 Starting automated collection for '{combat_type}' LoRA")
+        print(f"Target: {target_count} images\n")
         
-        # Get queries for this combat type
-        queries = self.combat_queries.get(combat_type, ['combat sports'])
-        
-        for query in queries:
-            if len(all_images) >= target_count:
-                break
+        # Use pre-collected free images
+        if combat_type in self.free_combat_images:
+            urls = self.free_combat_images[combat_type]
+            images = []
             
-            print(f"Searching for: {query}")
+            for i, url in enumerate(urls[:target_count]):
+                images.append({
+                    'url': url,
+                    'source': 'pixabay' if 'pixabay' in url else 'pexels',
+                    'photographer': 'Various',
+                    'license': 'CC0 / Pexels License'
+                })
             
-            # Try multiple sources
-            images = self.scrape_pexels(query, per_page=10)
-            all_images.extend(images)
+            # Download the images
+            print(f"Found {len(images)} free combat images")
+            output_dir = os.path.expanduser('~/combat-lora-maker/training_data')
+            downloaded = self.download_images(images, output_dir, combat_type)
             
-            # images = self.scrape_unsplash(query, per_page=10)
-            # all_images.extend(images)
-            
-            time.sleep(1)  # Rate limiting
-        
-        # Remove duplicates based on URL
-        seen = set()
-        unique_images = []
-        for img in all_images:
-            if img['url'] not in seen:
-                seen.add(img['url'])
-                unique_images.append(img)
-        
-        # Download the images
-        print(f"\nFound {len(unique_images)} unique images")
-        output_dir = os.path.expanduser('~/combat-lora-maker/training_data')
-        downloaded = self.download_images(unique_images[:target_count], 
-                                        output_dir, combat_type)
-        
-        print(f"\n✅ Downloaded {downloaded} images to {output_dir}/{combat_type}")
-        return downloaded
+            print(f"\n✅ Downloaded {downloaded} images to {output_dir}/{combat_type}")
+            print(f"\n📁 Next step: Run auto-captioning on these images!")
+            return downloaded
+        else:
+            print(f"Combat type '{combat_type}' not found. Available: punching, kicking, sword")
+            return 0
 
 
 # Additional sources to consider:

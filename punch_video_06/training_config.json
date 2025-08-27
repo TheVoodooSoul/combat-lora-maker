@@ -1,0 +1,13 @@
+{
+  "source_video": "Movie on 6-21-25 at 2.55\u202fAM.mov",
+  "dataset": "punch_video_06",
+  "images_count": 9,
+  "trigger_word": "combatstyle",
+  "fps_extracted": 1.1816205423549668,
+  "recommended_settings": {
+    "steps": 1180,
+    "learning_rate": 0.0004,
+    "network_dim": 32
+  },
+  "caption_template": "combatstyle, combat action fighting combat"
+}

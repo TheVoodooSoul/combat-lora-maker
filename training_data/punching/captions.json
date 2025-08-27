@@ -1,0 +1,62 @@
+[
+  {
+    "image": "punching_005_pexels.jpeg",
+    "caption": "punchstyle, combat, action, fighting, dynamic pose, fist, hook, combat stance, uppercut, intense, powerful",
+    "negative": "blurry, low quality, pixelated, distorted, amateur, poorly lit, out of focus, static pose, standing still, relaxed, casual, non-combat, peaceful, slow motion",
+    "trigger_word": "punchstyle"
+  },
+  {
+    "image": "punching_010_pexels.jpeg",
+    "caption": "punchstyle, combat, action, fighting, dynamic pose, fighter, jab, combat stance, fist, intense, powerful",
+    "negative": "blurry, low quality, pixelated, distorted, amateur, poorly lit, out of focus, static pose, standing still, relaxed, casual, non-combat, peaceful, slow motion",
+    "trigger_word": "punchstyle"
+  },
+  {
+    "image": "punching_009_pexels.jpeg",
+    "caption": "punchstyle, combat, action, fighting, dynamic pose, hook, fist, fighter, punching, athletic, intense",
+    "negative": "blurry, low quality, pixelated, distorted, amateur, poorly lit, out of focus, static pose, standing still, relaxed, casual, non-combat, peaceful, slow motion",
+    "trigger_word": "punchstyle"
+  },
+  {
+    "image": "punching_003_pexels.jpeg",
+    "caption": "punchstyle, combat, action, fighting, dynamic pose, fist, boxing, jab, fighter, intense, athletic",
+    "negative": "blurry, low quality, pixelated, distorted, amateur, poorly lit, out of focus, static pose, standing still, relaxed, casual, non-combat, peaceful, slow motion",
+    "trigger_word": "punchstyle"
+  },
+  {
+    "image": "punching_006_pexels.jpeg",
+    "caption": "punchstyle, combat, action, fighting, dynamic pose, jab, hook, boxing, combat stance, intense, athletic",
+    "negative": "blurry, low quality, pixelated, distorted, amateur, poorly lit, out of focus, static pose, standing still, relaxed, casual, non-combat, peaceful, slow motion",
+    "trigger_word": "punchstyle"
+  },
+  {
+    "image": "punching_001_pexels.jpeg",
+    "caption": "punchstyle, combat, action, fighting, dynamic pose, punching, jab, hook, fighter, intense, aggressive",
+    "negative": "blurry, low quality, pixelated, distorted, amateur, poorly lit, out of focus, static pose, standing still, relaxed, casual, non-combat, peaceful, slow motion",
+    "trigger_word": "punchstyle"
+  },
+  {
+    "image": "punching_008_pexels.jpeg",
+    "caption": "punchstyle, combat, action, fighting, dynamic pose, jab, hook, cross, fist, athletic, aggressive",
+    "negative": "blurry, low quality, pixelated, distorted, amateur, poorly lit, out of focus, static pose, standing still, relaxed, casual, non-combat, peaceful, slow motion",
+    "trigger_word": "punchstyle"
+  },
+  {
+    "image": "punching_004_pexels.jpeg",
+    "caption": "punchstyle, combat, action, fighting, dynamic pose, combat stance, strike, hook, fighter, powerful, aggressive",
+    "negative": "blurry, low quality, pixelated, distorted, amateur, poorly lit, out of focus, static pose, standing still, relaxed, casual, non-combat, peaceful, slow motion",
+    "trigger_word": "punchstyle"
+  },
+  {
+    "image": "punching_007_pexels.jpeg",
+    "caption": "punchstyle, combat, action, fighting, dynamic pose, punching, uppercut, boxing, cross, powerful, intense",
+    "negative": "blurry, low quality, pixelated, distorted, amateur, poorly lit, out of focus, static pose, standing still, relaxed, casual, non-combat, peaceful, slow motion",
+    "trigger_word": "punchstyle"
+  },
+  {
+    "image": "punching_002_pexels.jpeg",
+    "caption": "punchstyle, combat, action, fighting, dynamic pose, fighter, combat stance, cross, uppercut, powerful, intense",
+    "negative": "blurry, low quality, pixelated, distorted, amateur, poorly lit, out of focus, static pose, standing still, relaxed, casual, non-combat, peaceful, slow motion",
+    "trigger_word": "punchstyle"
+  }
+]

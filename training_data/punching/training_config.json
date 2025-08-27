@@ -1,0 +1,20 @@
+{
+  "dataset_path": "/Users/ace/combat-lora-maker/training_data/punching",
+  "combat_type": "punching",
+  "trigger_word": "punchstyle",
+  "training_settings": {
+    "base_model": "WAN 2.2",
+    "steps": 1000,
+    "learning_rate": 0.0004,
+    "batch_size": 1,
+    "network_dim": 16,
+    "network_alpha": 8,
+    "resolution": 1024
+  },
+  "augmentation": {
+    "random_flip": true,
+    "color_jitter": 0.1,
+    "random_crop": false,
+    "rotation_degrees": 15
+  }
+}

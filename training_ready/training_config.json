@@ -1,0 +1,11 @@
+{
+  "dataset": "training_ready",
+  "images_count": 57,
+  "trigger_word": "punchstyle",
+  "base_caption": "combat action fighting punching",
+  "recommended_settings": {
+    "steps": 1500,
+    "learning_rate": 0.0004,
+    "network_dim": 32
+  }
+}

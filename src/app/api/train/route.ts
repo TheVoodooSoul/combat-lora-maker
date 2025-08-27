@@ -2,18 +2,37 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // fal.ai API configuration
 const FAL_API_KEY = process.env.FAL_API_KEY || '';
-const FAL_API_URL = 'https://fal.run/fal-ai/flux-lora-fast-training';
+
+// Base model URL mapping for fal.ai
+const BASE_MODEL_URLS: Record<string, string> = {
+  'wan_2.2': 'https://fal.run/fal-ai/wan-lora-training',  // WAN 2.2 specific endpoint
+  'flux-dev': 'https://fal.run/fal-ai/flux-lora-fast-training',
+  'flux-schnell': 'https://fal.run/fal-ai/flux-lora-fast-training',
+  'sdxl': 'https://fal.run/fal-ai/fast-sdxl-lora-training',
+  'sd15': 'https://fal.run/fal-ai/sd-lora-training',
+  'sd21': 'https://fal.run/fal-ai/sd-lora-training',
+  'pony': 'https://fal.run/fal-ai/pony-lora-training',
+  'custom': 'https://fal.run/fal-ai/flux-lora-fast-training', // Default to flux for custom
+};
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { images, config } = body;
 
+    // Get the appropriate API endpoint for the base model
+    const baseModel = config.baseModel || 'wan_2.2';
+    const apiUrl = BASE_MODEL_URLS[baseModel] || BASE_MODEL_URLS['flux-dev'];
+
+    // Adjust resolution based on model
+    const resolution = baseModel === 'sd15' || baseModel === 'sd21' ? 512 : 1024;
+
     // Prepare training configuration for fal.ai
     const trainingPayload = {
       // Model configuration
       model_name: config.modelName || 'combat_lora_v1',
-      resolution: 1024,
+      resolution: resolution,
+      base_model: baseModel === 'wan_2.2' ? 'wan-2.2' : baseModel,
       
       // Training parameters
       steps: config.steps || 1000,
@@ -34,7 +53,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Call fal.ai API
-    const response = await fetch(FAL_API_URL, {
+    const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Authorization': `Key ${FAL_API_KEY}`,

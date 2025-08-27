@@ -1,0 +1,13 @@
+{
+  "source_video": "CleanShot 2025-06-12 at 23.42.31 2.mp4",
+  "dataset": "punch_video_08",
+  "images_count": 27,
+  "trigger_word": "combatstyle",
+  "fps_extracted": 0.5,
+  "recommended_settings": {
+    "steps": 1540,
+    "learning_rate": 0.0004,
+    "network_dim": 32
+  },
+  "caption_template": "combatstyle, combat action fighting combat"
+}
