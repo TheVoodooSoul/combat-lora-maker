@@ -57,20 +57,73 @@ export default function Home() {
     }
   };
 
-  const startTraining = () => {
+  const startTraining = async () => {
+    if (trainingImages.length === 0) {
+      alert('Please upload training images first!');
+      return;
+    }
+
     setIsTraining(true);
     setActiveTab('progress');
-    // Simulate training progress
-    const interval = setInterval(() => {
-      setTrainingProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsTraining(false);
-          return 100;
-        }
-        return prev + 1;
+    setTrainingProgress(0);
+
+    try {
+      // Convert images to base64 for API
+      const imagePromises = trainingImages.map(file => {
+        return new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (e) => resolve(e.target?.result as string);
+          reader.readAsDataURL(file);
+        });
       });
-    }, 200);
+      
+      const images = await Promise.all(imagePromises);
+
+      // Call training API
+      const response = await fetch('/api/train', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          images,
+          config: {
+            ...trainingConfig,
+            modelName: `combat_lora_${Date.now()}`,
+            triggerWord: 'combat_style',
+          },
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Start polling for progress
+        const jobId = result.jobId;
+        const checkInterval = setInterval(async () => {
+          const statusResponse = await fetch(`/api/train?jobId=${jobId}`);
+          const status = await statusResponse.json();
+          
+          setTrainingProgress(status.progress || 0);
+          
+          if (status.status === 'COMPLETED') {
+            clearInterval(checkInterval);
+            setIsTraining(false);
+            setTrainingProgress(100);
+            alert(`Training complete! Download URL: ${status.downloadUrl}`);
+          } else if (status.status === 'FAILED') {
+            clearInterval(checkInterval);
+            setIsTraining(false);
+            alert('Training failed. Please try again.');
+          }
+        }, 30000); // Check every 30 seconds
+      } else {
+        alert('Failed to start training. Check your API key.');
+        setIsTraining(false);
+      }
+    } catch (error) {
+      console.error('Training error:', error);
+      alert('Training error. Please check console.');
+      setIsTraining(false);
+    }
   };
 
   return (
