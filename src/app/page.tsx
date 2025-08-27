@@ -163,9 +163,13 @@ export default function Home() {
                   <div>
                     <label className="block text-sm font-medium mb-2">Base Model</label>
                     <select className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg">
+                      <option>WAN 2.2</option>
                       <option>SDXL 1.0</option>
                       <option>SD 1.5</option>
                       <option>SD 2.1</option>
+                      <option>Pony Diffusion V6</option>
+                      <option>Flux Dev</option>
+                      <option>Flux Schnell</option>
                       <option>Custom Checkpoint</option>
                     </select>
                   </div>
@@ -335,7 +339,7 @@ export default function Home() {
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-gray-400">Model:</span>
-                      <span>SDXL 1.0</span>
+                      <span>WAN 2.2</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-400">Images:</span>
@@ -444,7 +448,7 @@ export default function Home() {
                 <h4 className="font-semibold mb-3">Training Log</h4>
                 <div className="bg-gray-800 rounded-lg p-4 font-mono text-xs space-y-1 max-h-40 overflow-y-auto">
                   <div className="text-green-400">[INFO] Training started...</div>
-                  <div className="text-gray-400">[INFO] Loading model: SDXL 1.0</div>
+                  <div className="text-gray-400">[INFO] Loading model: WAN 2.2</div>
                   <div className="text-gray-400">[INFO] Dataset: {trainingImages.length} images loaded</div>
                   <div className="text-gray-400">[INFO] Batch size: 1, Gradient accumulation: 1</div>
                   {trainingProgress > 20 && <div className="text-gray-400">[STEP 500] Loss: 0.0823</div>}
