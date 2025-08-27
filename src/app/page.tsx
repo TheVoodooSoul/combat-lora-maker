@@ -5,6 +5,15 @@ import Link from 'next/link';
 
 // Training presets for different combat styles
 const trainingPresets = {
+  'custom': {
+    name: 'Custom Settings',
+    steps: 2000,
+    lr: 0.0001,
+    networkDim: 32,
+    networkAlpha: 16,
+    caption: 'dynamic action pose, combat scene',
+    negativePrompt: 'blurry, low quality, static'
+  },
   'sword_combat': {
     name: 'Sword Combat',
     steps: 2000,
@@ -44,9 +53,9 @@ const trainingPresets = {
 };
 
 export default function Home() {
-  const [selectedPreset, setSelectedPreset] = useState('sword_combat');
+  const [selectedPreset, setSelectedPreset] = useState('custom');
   const [trainingImages, setTrainingImages] = useState<File[]>([]);
-  const [trainingConfig, setTrainingConfig] = useState(trainingPresets.sword_combat);
+  const [trainingConfig, setTrainingConfig] = useState(trainingPresets.custom);
   const [isTraining, setIsTraining] = useState(false);
   const [trainingProgress, setTrainingProgress] = useState(0);
   const [activeTab, setActiveTab] = useState('setup');
