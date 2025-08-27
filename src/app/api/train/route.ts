@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
       logs: status.logs,
     });
 
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to check status' },
       { status: 500 }

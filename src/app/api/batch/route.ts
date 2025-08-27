@@ -37,7 +37,24 @@ const COMBAT_TEMPLATES = [
 ];
 
 // Queue for batch processing
-let trainingQueue: any[] = [];
+const trainingQueue: Array<{
+  name: string;
+  triggerWord: string;
+  basePrompt: string;
+  negativePrompt: string;
+  steps: number;
+  lr: number;
+  images?: string[];
+  status: string;
+  createdAt?: string;
+  startedAt?: string;
+  completedAt?: string;
+  jobId?: string;
+  estimatedTime?: number;
+  progress?: number;
+  downloadUrl?: string;
+  error?: string;
+}> = [];
 let isProcessing = false;
 
 export async function POST(request: NextRequest) {
@@ -123,7 +140,7 @@ async function processQueue() {
         nextItem.status = 'failed';
         nextItem.error = result.error;
       }
-    } catch (error) {
+    } catch {
       nextItem.status = 'failed';
       nextItem.error = 'Training request failed';
     }
@@ -135,7 +152,7 @@ async function processQueue() {
   isProcessing = false;
 }
 
-async function waitForCompletion(item: any) {
+async function waitForCompletion(item: typeof trainingQueue[0]) {
   let attempts = 0;
   const maxAttempts = 120; // Check for 2 hours max
 
